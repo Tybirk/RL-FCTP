@@ -10,7 +10,7 @@
 
 
 ## Welcome!
-This repository contains Java classes to represent instances of the fixed charge transportation problem (FCTP), heuristic algorithms to find solutions to the FCTP and code which enables the utilization of reinforcement learning methods to solve the FCTP. We owe most of the code for manipulating solutions to the FCTP to Andreas Klose http://home.math.au.dk/aklose/FCTP/javadoc/, apart from the added classes PEheur and RL_composite. For the reinforcement learning part, we extended the framework build by Medipixel (https://github.com/medipixel/rl_algorithms/blob/master/README.md) to handle the fixed charge transportation problem, as well as building an $n$-step A2C agent. 
+This repository contains Java classes to represent instances of the fixed charge transportation problem (FCTP), heuristic algorithms to find solutions to the FCTP and code which enables the utilization of reinforcement learning methods to solve the FCTP. We owe most of the code for manipulating solutions to the FCTP to Andreas Klose http://home.math.au.dk/aklose/FCTP/, apart from the added classes PEheur and RL_composite. For the reinforcement learning part, we extended the framework build by Medipixel (https://github.com/medipixel/rl_algorithms/blob/master/README.md) to handle the fixed charge transportation problem, as well as building an $n$-step A2C agent. 
 
 ## Algorithms
 
