@@ -3,18 +3,12 @@
 ## Contents
 
 * [Welcome!](https://github.com/Tybirk/RL-FCTP#Welcome!)
-* [Algorithms](https://github.com/Tybirk/RL-FCTP#Algorithms)
 * [Getting Started](https://github.com/Tybirk/RL-FCTP#Getting-started)
 * [References](https://github.com/Tybirk/RL-FCTP#References)
 
 
 ## Welcome!
 This repository contains Java classes to represent instances of the fixed charge transportation problem (FCTP), heuristic algorithms to find solutions to the FCTP and a framework which enables the utilization of reinforcement learning methods to solve instances of the FCTP. We owe most of the code for manipulating solutions to the FCTP to Andreas Klose (http://home.math.au.dk/aklose/FCTP/), apart from the added classes PEheur and RL_composite. For the reinforcement learning part, we extended the framework build by Medipixel (https://github.com/medipixel/rl_algorithms/blob/master/README.md) to handle the fixed charge transportation problem by customizing a gym environment.
-
-## Algorithms
-In the Java folder, one can find a lot of algorithms to manipulate solutions to the FCTP. Most of it is documented at http://home.math.au.dk/aklose/FCTP/, but the class PEheur contains additional algorithms, for example population based iterated random neighbourhood local search. 
-
-In the Python/rl_algorithms folder, one can find implementations of n-step A2C and n-step DQN agents.
 
 
 ## Getting started
@@ -42,13 +36,21 @@ cd Python/gym-FCTP
 pip install -e .
 ```
 
-
 ### Usages
 
 #### Java part
+You can run configure algorithm choice and some hyperparameters in the file FCTPheur.ini. 
+You run the chosen algorithm on an instance from a file, e.g. Glover/N3004.FCTP by calling
+```
+java FCTPmain Glover/N3004.FCTP
+``` 
+In the file FCTPheur.java, you can inspect more closely which methods are then called for what hyperparameter setting. 
 
 #### Reinforcement learning part
-You can train or test `algorithm` on `env_name` if `Python/rl_algorithms/env_name/algorithm.py` exists. (`examples/env_name/algorithm.py` contains hyper-parameters and details of networks.) As of now, there is just one environment, namely fctp_v1.
+In the folder gym-FCTP/gym_FCTP/envs, the implementation of the FCTP environment can be found. The actions are implemented in Java and called in Python with the help of Pyjnius. 
+
+
+You can train or test `algorithm` on `env_name` if `Python/rl_algorithms/env_name/algorithm.py` exists. (`Python/rl_algorithms/env_name/algorithm.py` contains hyper-parameters and details of networks.) As of now, there is just one environment, namely fctp_v1.
 
 ```
 cd Python/rl_algorithms
