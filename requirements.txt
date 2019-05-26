@@ -9,4 +9,3 @@ cloudpickle
 opencv-python
 wandb
 
-# mujoco

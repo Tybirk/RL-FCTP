@@ -2,72 +2,63 @@
 
 ## Contents
 
-* [Welcome!](https://github.com/Tybirk/RL-FCTP#welcome)
-* [Algorithms](https://github.com/medipixel/rl_algorithms#algorithms)
-* [Performance](https://github.com/medipixel/rl_algorithms#performance)
-* [Getting Started](https://github.com/medipixel/rl_algorithms#getting-started)
-* [References](https://github.com/medipixel/rl_algorithms#references)
+* [Welcome!](https://github.com/Tybirk/RL-FCTP#Welcome!)
+* [Algorithms](https://github.com/Tybirk/RL-FCTP#Algorithms)
+* [Getting Started](https://github.com/Tybirk/RL-FCTP#Getting-started)
+* [References](https://github.com/Tybirk/RL-FCTP#References)
 
 
 ## Welcome!
-This repository contains Java classes to represent instances of the fixed charge transportation problem (FCTP), heuristic algorithms to find solutions to the FCTP and code which enables the utilization of reinforcement learning methods to solve the FCTP. We owe most of the code for manipulating solutions to the FCTP to Andreas Klose http://home.math.au.dk/aklose/FCTP/, apart from the added classes PEheur and RL_composite. For the reinforcement learning part, we extended the framework build by Medipixel (https://github.com/medipixel/rl_algorithms/blob/master/README.md) to handle the fixed charge transportation problem, as well as building an $n$-step A2C agent. 
+This repository contains Java classes to represent instances of the fixed charge transportation problem (FCTP), heuristic algorithms to find solutions to the FCTP and a framework which enables the utilization of reinforcement learning methods to solve instances of the FCTP. We owe most of the code for manipulating solutions to the FCTP to Andreas Klose (http://home.math.au.dk/aklose/FCTP/), apart from the added classes PEheur and RL_composite. For the reinforcement learning part, we extended the framework build by Medipixel (https://github.com/medipixel/rl_algorithms/blob/master/README.md) to handle the fixed charge transportation problem by customizing a gym environment.
 
 ## Algorithms
+In the Java folder, one can find a lot of algorithms to manipulate solutions to the FCTP. Most of it is documented at http://home.math.au.dk/aklose/FCTP/, but the class PEheur contains additional algorithms, for example population based iterated random neighbourhood local search. 
 
-## Performance
+In the Python/rl_algorithms folder, one can find implementations of n-step A2C and n-step DQN agents.
+
 
 ## Getting started
 
 ### Prerequisites
-* This repository is tested on [Anaconda](https://www.anaconda.com/distribution/) virtual environment with python 3.6.1+
+* This repository is tested on [Anaconda](https://www.anaconda.com/distribution/) virtual environment with Python 3.6.1+
     ```
     $ conda create -n rl_algorithms python=3.6.1
     $ conda activate rl_algorithms
     ```
-* In order to run Mujoco environments (e.g. `Reacher-v2`), you need to acquire [Mujoco license](https://www.roboti.us/license.html).
 
-#### Installation
+### Installation
 First, clone the repository.
 ```
-git clone https://github.com/medipixel/rl_algorithms.git
-cd rl_algorithms
+git clone https://github.com/Tybirk/RL-FCTP.git
 ```
 Secondly, install packages required to execute the code. Just type:
 ```
-make dep
+pip install -r requirements.txt
 ```
 
-###### For developers
-You need to type the additional command which configures formatting and linting settings. It automatically runs formatting and linting when you commit the code.
-
+Thirdly, install the custom FCTP environment
 ```
-make dev
-```
-
-After having done `make dev`, you can validate the code by the following commands.
-```
-make format  # for formatting
-make test  # for linting
+cd Python/gym-FCTP
+pip install -e .
 ```
 
-#### Usages
-You can train or test `algorithm` on `env_name` if `examples/env_name/algorithm.py` exists. (`examples/env_name/algorithm.py` contains hyper-parameters and details of networks.)
+
+### Usages
+
+#### Java part
+
+#### Reinforcement learning part
+You can train or test `algorithm` on `env_name` if `Python/rl_algorithms/env_name/algorithm.py` exists. (`examples/env_name/algorithm.py` contains hyper-parameters and details of networks.) As of now, there is just one environment, namely fctp_v1.
+
 ```
-python run_env_name.py --algo algorithm
+cd Python/rl_algorithms
+python run_fctp_v1.py --algo dqn <other-options>
+python run_fctp_v1.py --algo n_step_a2c <other-options>
 ``` 
 
-e.g. running soft actor-critic on LunarLanderContinuous-v2.
-```
-python run_lunarlander_continuous_v2.py --algo sac <other-options>
-```
+The hyperparameters for each run can be modified in the folder Python/rl_algorithms/fctp_v1
 
-e.g. running a custom agent, **if you have written your own example**: `examples/env_name/ddpg-custom.py`.
-```
-python run_env_name.py --algo ddpg-custom
-```
-You will see the agent run with hyper parameter and model settings you configured.
-
-#### Arguments for run-files
+##### Arguments for run-files
 
 In addition, there are various argument settings for running algorithms. If you check the options to run file you should command 
 ```
