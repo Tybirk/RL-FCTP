@@ -27,7 +27,7 @@ public class FCTPls extends FCTPgreedy
   public FCTPls( String fname ) throws Exception
   {
     super( fname );
-    if(FCTPparam.outFile != null && !FCTPparam.outFile .isEmpty()) {
+    if(FCTPparam.outFile != null && !FCTPparam.outFile.isEmpty()) {
       fileWriter = new FileWriter(FCTPparam.outFile);
       fileWriter.write(FCTPparam.inFile + "\n");
     }

@@ -11,15 +11,6 @@ public class PEheur extends FCTPls {
     public RandomCollection<Integer> rc1;
     public RandomCollection<Integer> rc2;
     public RandomCollection<Integer> rc3;
-    public FCTPsol best_sol = new FCTPsol(solution);
-    public FCTPsol cur_sol = new FCTPsol(solution);
-    private long startTicks;
-    private double CPUtime;
-    private static final long NANO_PR_SEC = 1000000000;
-    /**
-     * Used for CPU time measurement (if supported)
-     */
-    private static final ThreadMXBean bean = ManagementFactory.getThreadMXBean();
 
 
     public PEheur(String fname) throws Exception {
@@ -32,10 +23,6 @@ public class PEheur extends FCTPls {
         this.rc1 = get_random_collection(gvals1, true);
         this.rc2 = get_random_collection(gvals2, true);
         this.rc3 = get_random_collection(gvals3, true);
-    }
-
-    public PEheur(int mm, int nn, int[] s, int[] d, double[] tc, double[] fc, boolean copyDat) {
-        super(mm, nn, s, d, tc, fc, copyDat);
     }
 
     /**
@@ -285,15 +272,6 @@ public class PEheur extends FCTPls {
     }
 
     /**
-     * Overwrites LocalSearch to be of RNLS kind.
-     */
-    public void LocalSearch() {
-        LS_first_acc();
-        RNLS(50, 20);
-        LS_first_acc();
-    }
-
-    /**
      * Introduces num_exchanges new arcs into the basis with probabilities according to an evaluation measure
      *
      * @param num_exchanges - number of non-basic arcs to be made basic. If equal to zero, this number
@@ -537,7 +515,7 @@ public class PEheur extends FCTPls {
      * @param init_sols Array of high quality solutions
      * @return Array of updated solution after intensification and diversification procedure.
      */
-    public FCTPsol[] intensify_diversify(FCTPsol[] init_sols, int max_runs) {
+    public FCTPsol[] intensify_diversify(FCTPsol[] init_sols, int max_runs, boolean v2) {
         if (max_runs == 0) {
             max_runs = FCTPparam.max_no_imp;
         }
@@ -575,7 +553,7 @@ public class PEheur extends FCTPls {
                 sol_avgs[i] = (sol_avgs[i] / counts[i]); //reverse greedy
             } else {
                 sol_avgs_reversed[i] = 1.0;
-                sol_avgs[i] = worst;
+                sol_avgs[i] = worst * 5;
             }
         }
 
@@ -589,9 +567,15 @@ public class PEheur extends FCTPls {
         // Now do actual intensification and diversification
         for (int i = 0; i < n_runs; i++) {
             solution.Overwrite(init_sols[i]);
-            Evaluation_based_IRNLS(rc_intensify, max_runs);
+            if (v2) Evaluation_based_IRNLS_v2(rc_intensify, max_runs);
+            else {
+                Evaluation_based_IRNLS(rc_intensify, max_runs);
+            }
             new_sols[i] = new FCTPsol(solution);
-            Evaluation_based_IRNLS(rc_diversify, max_runs);
+            if (v2) Evaluation_based_IRNLS_v2(rc_diversify, max_runs / 4);
+            else {
+                Evaluation_based_IRNLS(rc_diversify, max_runs);
+            }
             new_sols2[i] = new FCTPsol(solution);
             if (solution.totalCost < final_sol.totalCost) {
                 final_sol.Overwrite(solution);
@@ -680,7 +664,7 @@ public class PEheur extends FCTPls {
             }
 
             if (FCTPparam.screen_on) System.out.format("%16.2f%10.2f%n", solution.totalCost, best_sol.totalCost);
-            if(iter % 2 == 0)  RNLS(50, 20);
+            if (iter % 2 == 0) RNLS(50, 20);
             else {
                 component = randgen.nextInt(7); //Draw random element in [0,6] (pool of mutations)
                 switch (component) {
@@ -712,10 +696,16 @@ public class PEheur extends FCTPls {
         solution.Overwrite(best_sol);
         System.out.format("%4d%17.2f%n", iter, solution.totalCost);
         iterCount = iter;
+        try {
+            fileWriter.write(solution.totalCost + "\n");
+        } catch (Exception exc) {
+            System.out.println("Error: " + exc.getMessage());
+        }
     }
 
     /**
      * Another version of IRNLS
+     *
      * @param max_runs Maximum number of iterations without new best objective value. If 0, it is set to
      *                 FCTPparam.max_no_imp
      */
@@ -747,7 +737,7 @@ public class PEheur extends FCTPls {
 
             if (FCTPparam.screen_on) System.out.format("%16.2f%10.2f%n", solution.totalCost, best_sol.totalCost);
 
-            boolean accept = (solution.totalCost < cur_sol.totalCost || (num_cur_fail > 10 && solution.totalCost < cur_sol.totalCost * 1.03));
+            boolean accept = (solution.totalCost < cur_sol.totalCost || (num_cur_fail > 5 && solution.totalCost < cur_sol.totalCost * 1.03));
 
             if (solution.totalCost < best_sol.totalCost) {
                 best_sol.Overwrite(solution);
@@ -769,14 +759,14 @@ public class PEheur extends FCTPls {
                 num_cur_fail = 0;
                 num_best_fail = 0;
             }
-            if(iter % 2 == 0)  RNLS(50, 20);
+            if (iter % 2 == 0) RNLS(50, 30);
             else {
                 // Smaller pool of mutations, fixed order
-                if (num_fail % 3 == 0) {
+                if (iter % 6 == 1) {
                     modified_cost_local_search(4, 0);
-                } else if (num_fail % 3 == 1) {
+                } else if (iter % 6 == 3) {
                     modified_cost_local_search(3, 0);
-                } else if (num_fail % 3 == 2) {
+                } else if (iter % 6 == 5) {
                     Kicksolution_greedy(0, rc3);
                 }
             }
@@ -788,39 +778,123 @@ public class PEheur extends FCTPls {
     }
 
     /**
+     * Evaluation based ILS, second version.
+     *
+     * @param rc Random collection to draw arcs from
+     * @param max_runs Maximal number of runs without improvement
+     */
+    public void Evaluation_based_IRNLS_v2(RandomCollection<Integer> rc, int max_runs) {
+        // Initialise parameter controlling when to reset the current solution
+        if (max_runs == 0) {
+            max_runs = FCTPparam.max_no_imp;
+        }
+        int num_fail = 0; //Time since best solution found
+        int num_cur_fail = 0; //Time since since last reset to cur sol
+        int num_best_fail = 0;  //Time since last reset to best sol
+        int iter = 0;
+
+        // Display something on the screen, so that we can see that something happens
+        if (FCTPparam.screen_on) {
+            System.out.println("=============== DOING IRNLS_v2 ================");
+            System.out.println("ITER  OBJ (before LS)  OBJ (after LS)  BEST_OBJ");
+        }
+        // Save the initial solution as both the "current" and incumbent solution
+        FCTPsol best_sol = new FCTPsol(solution);
+        FCTPsol cur_sol = new FCTPsol(solution);
+
+        do {
+            iter++;
+            if (FCTPparam.screen_on) System.out.format("%4d%17.2f", iter, solution.totalCost);
+
+            LS_first_acc();
+
+            if (FCTPparam.screen_on) System.out.format("%16.2f%10.2f%n", solution.totalCost, best_sol.totalCost);
+
+            boolean accept = (solution.totalCost < cur_sol.totalCost || (num_cur_fail > 5 && solution.totalCost < cur_sol.totalCost * 1.03));
+
+            if (solution.totalCost < best_sol.totalCost) {
+                best_sol.Overwrite(solution);
+                num_fail = 0;
+                num_best_fail = 0;
+            } else {
+                num_fail++;
+                num_best_fail++;
+            }
+            if (accept) {
+                cur_sol.Overwrite(solution);
+                num_cur_fail = 0;
+            } else {
+                solution.Overwrite(cur_sol);
+                num_cur_fail++;
+            }
+            if (num_best_fail >= 30) {
+                solution.Overwrite(best_sol);
+                num_cur_fail = 0;
+                num_best_fail = 0;
+            }
+            if (iter % 2 == 0) RNLS(50, 30);
+            else {
+                // Smaller pool of mutations, fixed order
+                if (iter % 6 == 1) {
+                    modified_cost_local_search(4, 0);
+                } else {
+                    Kicksolution_greedy(0, rc);
+                }
+            }
+        } while (num_fail < max_runs);
+        solution.Overwrite(best_sol);
+        System.out.format("%4d%17.2f%n", iter, solution.totalCost);
+        iterCount = iter;
+    }
+
+    /**
      * A population based iterated random neighbourhood local search
+     *
      * @param population_sizes A list of decreasing population sizes, e.g. [100, 50, 10] will create 100
      *                         initial solutions with IRNLS, and then apply the population based procedure with these
      *                         100 as start, then take the best resulting 50 solutions, and finally the resulting best
      *                         10
-     * @param max_runs  List of max runs for IRNLS in each step, e.g. [800, 1500, 2000]
+     * @param max_runs         List of max runs for IRNLS in each step, e.g. [800, 1500, 2000]
+     * @param v2               Whether or not to use v2 of IRNLS and Evaluation based IRNLS
      */
-    public void PIRNLS(int[] population_sizes, int[] max_runs) {
+    public void PIRNLS(int[] population_sizes, int[] max_runs, boolean v2) {
         int num_runs = population_sizes.length;
 
         FCTPsol[][] populations = new FCTPsol[num_runs][]; //Allocate space for populations
 
         //Set individual population sizes from array
-        for(int i = 0; i < num_runs; i++){
-            populations[i] =  new FCTPsol[population_sizes[i]];
+        for (int i = 0; i < num_runs; i++) {
+            populations[i] = new FCTPsol[population_sizes[i]];
         }
 
-        // Create initial population of good solutions
+        // Create initial population of good solutions with IRNLS
         for (int i = 0; i < population_sizes[0]; i++) {
-            if (i % 3 == 0) RandGreedy(0.4);
-            else LPheu();
-            Kicksolution((m + n - 1) / 2);
-            IRNLS(max_runs[0]);
+
+            // Here you can adjust proportion of RandGreedy to LPheu
+            if (i > 2 * population_sizes[0] / 3) RandGreedy(0.5);
+            else {
+                LPheu();
+                if (i > population_sizes[0] / 5) {
+                    Kicksolution((m + n - 1) / 4);
+                    if (i > population_sizes[0] / 3) Kicksolution((m + n - 1) / 4);
+                }
+            }
+
+            if (v2) IRNLS_v2(max_runs[0]);
+            else IRNLS(max_runs[0]);
 
             populations[0][i] = new FCTPsol(solution);
         }
-        FCTPsol[] current_population = intensify_diversify(populations[0], max_runs[0]);
+
+        // Improve population by intesification and then diversification
+        FCTPsol[] current_population = intensify_diversify(populations[0], max_runs[0], v2);
+
         //Iteratively run population based IRNLS with decreasing population size
-        for (int j = 1; j < num_runs; j++){
+        for (int j = 1; j < num_runs; j++) {
 
             //Get population_sizes[j] best solutions from current population
-            double[] costs = new double[population_sizes[j-1]];
-            for (int k = 0; k < population_sizes[j-1]; k++) {
+            double[] costs = new double[population_sizes[j - 1]];
+            for (int k = 0; k < population_sizes[j - 1]; k++) {
                 costs[k] = -current_population[k].totalCost;
             }
 
@@ -830,11 +904,14 @@ public class PEheur extends FCTPls {
             int i = 0;
             for (int idx : indices) {
                 solution.Overwrite(current_population[idx]);
-                IRNLS(max_runs[j]);
+                if (v2) IRNLS_v2(max_runs[j]);
+                else {
+                    IRNLS(max_runs[j]);
+                }
                 populations[j][i] = new FCTPsol(solution);
                 i++;
             }
-            current_population = intensify_diversify(populations[j], max_runs[j]);
+            current_population = intensify_diversify(populations[j], max_runs[j], v2);
         }
 
         //Finally, try one last search for improvement

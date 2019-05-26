@@ -31,7 +31,7 @@ public class FCTPmain
     // Tell class FCTPparam about initialization file, input and output filename
     FCTPparam.setParam( FCTPparam.INPUTFILE, args[0] );
     if ( args.length > 1 ) FCTPparam.setParam( FCTPparam.OUTPUTFILE, args[1] );
-    else { FCTPparam.setParam(FCTPparam.OUTPUTFILE, "results/" + args[0].split("/")[1] + ".txt"); }
+    //else { FCTPparam.setParam(FCTPparam.OUTPUTFILE, "results/" + args[0].split("/")[1] + ".txt"); }
     FCTPparam.setParam( FCTPparam.INITFILE, "FCTPheur.ini" );
     
     try 

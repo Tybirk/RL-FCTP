@@ -7,28 +7,26 @@ import jnius_config
 from collections import deque
 import random
 
-path = '/home/tybirk/Desktop/Speciale/FCTP/Java_code'  # Change to directory containing the java code
+path = '/home/tybirk/Desktop/Thesis_Code/Java'  # Change to directory containing the java code
 os.chdir(path)
 
 
-def set_pyjnius_path(path):
-    """
-    Establish connection to java code via pyjnius
-    :param path: Location of java classes for FCTP
-    """
-    try:
-        jnius_config.set_classpath('./', path)
-    except ValueError:
-        print("Value error when setting classpath, proceed anyway")  # Error when path already set
+"""
+Establish connection to java code via pyjnius
+"""
+try:
+    jnius_config.set_classpath('./', path)
+except ValueError:
+    print("Value error when setting classpath, proceed anyway")  # Error when path already set
 
-    try:
-        from jnius import autoclass
-    except KeyError:
-        os.environ['JAVA_HOME'] = "/home/tybirk/anaconda3"  # Set your java home
-        from jnius import autoclass
+try:
+    from jnius import autoclass
+except KeyError:
+    os.environ['JAVA_HOME'] = "/home/tybirk/anaconda3"  # Set your java home
+    from jnius import autoclass
 
 
-set_pyjnius_path()
+
 
 
 class FCTPEnv(gym.Env):
@@ -178,7 +176,7 @@ class FCTPEnv(gym.Env):
 
         self.actions_taken = []
         self.step_number = 0
-        self.succes_last_20 = deque(maxlen=20)  # Keep track of succeses of last 20 actions
+        self.success_last_20 = deque(maxlen=20)  # Keep track of succeses of last 20 actions
         self.action_history = deque(maxlen=20)  # Keep track of last 20 actions
         self.n_runs = 0
         self.best_sol_val = 0
@@ -363,7 +361,7 @@ class FCTPEnv(gym.Env):
         self.instance.do_action(action, self.comp)  # Call to java class, alters solution
 
         updated_features = self.get_solution_features(self.instance, old_features=self.state,
-                                                      start_value=self.upper_bounds[self.instance_idx],
+                                                      upper_bound=self.upper_bounds[self.instance_idx],
                                                       lower_bound=self.lower_bounds[self.instance_idx])
 
         next_state = np.concatenate(
@@ -429,11 +427,11 @@ class FCTPEnv(gym.Env):
         else:
             self.name = name
             self.instance_idx = self.idx_dict[name]
-
+        print(self.name)
         self.instance = autoclass('RL_composite')(self.name)
 
         self.best_sol = self.instance.solution
-        self.best_sol_val = best_sol.totalCost
+        self.best_sol_val = self.best_sol.totalCost
 
         self.state = np.concatenate((np.array([0, 0, self.instance.solution.get_rel_pos_flow(), 0,
                                                self.instance.get_fcost_percent(), 0, 0]), self.action_vec,

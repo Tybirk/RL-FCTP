@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="68e210a6-b461-4862-990d-e0689c5e492c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.all-contributorsrc" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../.flake8" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" />
@@ -14,6 +13,34 @@
       <change beforePath="$PROJECT_DIR$/../LICENSE.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../Makefile" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java/FCTPheur.class" beforeDir="false" afterPath="$PROJECT_DIR$/Java/FCTPheur.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java/FCTPheur.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Java/FCTPheur.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java/FCTPheur.java" beforeDir="false" afterPath="$PROJECT_DIR$/Java/FCTPheur.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java/FCTPls$RandomCollection.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java/FCTPls.java" beforeDir="false" afterPath="$PROJECT_DIR$/Java/FCTPls.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java/FCTPmain.class" beforeDir="false" afterPath="$PROJECT_DIR$/Java/FCTPmain.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java/FCTPmain.java" beforeDir="false" afterPath="$PROJECT_DIR$/Java/FCTPmain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java/FCTPparam.java" beforeDir="false" afterPath="$PROJECT_DIR$/Java/FCTPparam.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java/PEheur.class" beforeDir="false" afterPath="$PROJECT_DIR$/Java/PEheur.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java/PEheur.java" beforeDir="false" afterPath="$PROJECT_DIR$/Java/PEheur.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java/RL_composite.class" beforeDir="false" afterPath="$PROJECT_DIR$/Java/RL_composite.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java/RL_composite.java" beforeDir="false" afterPath="$PROJECT_DIR$/Java/RL_composite.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java/results/N3604.FCTP.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Java/results/N3604.FCTP.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Python/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Python/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python/data_analysis/plotting.py" beforeDir="false" afterPath="$PROJECT_DIR$/Python/data_analysis/plotting.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python/gym-FCTP/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/Python/gym-FCTP/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python/gym-FCTP/gym_FCTP.egg-info/PKG-INFO" beforeDir="false" afterPath="$PROJECT_DIR$/Python/gym-FCTP/gym_FCTP.egg-info/PKG-INFO" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python/gym-FCTP/gym_FCTP/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/Python/gym-FCTP/gym_FCTP/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python/gym-FCTP/gym_FCTP/envs/FCTP_env.py" beforeDir="false" afterPath="$PROJECT_DIR$/Python/gym-FCTP/gym_FCTP/envs/FCTP_env.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python/gym-FCTP/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/Python/gym-FCTP/setup.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python/rl_algorithms/fctp_v0/a2c.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python/rl_algorithms/fctp_v0/dqn.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python/rl_algorithms/fctp_v0/n_step_a2c.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python/rl_algorithms/fctp_v0/rand.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python/rl_algorithms/run_fctp_v0.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../__init__.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../algorithms/a2c/agent.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../algorithms/bc/ddpg_agent.py" beforeDir="false" />
@@ -86,25 +113,14 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Java/FCTPsol.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="65" column="13" selection-start-line="65" selection-start-column="13" selection-end-line="65" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Java/PEheur.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="734">
-              <caret line="829" column="22" lean-forward="true" selection-start-line="829" selection-start-column="22" selection-end-line="829" selection-end-column="22" />
+            <state relative-caret-position="689">
+              <caret line="897" column="72" lean-forward="true" selection-start-line="897" selection-start-column="72" selection-end-line="897" selection-end-column="72" />
               <folding>
-                <element signature="method#modified_cost_local_search#0;class#PEheur#0" />
                 <element signature="docComment;method#intensify_diversify#0;class#PEheur#0" />
                 <element signature="docComment;method#IRNLS#0;class#PEheur#0" />
                 <element signature="docComment;method#IRNLS_v2#0;class#PEheur#0" />
-                <element signature="docComment;method#PIRNLS#0;class#PEheur#0" />
               </folding>
             </state>
           </provider>
@@ -113,8 +129,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Java/FCTPheur.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="554">
-              <caret line="126" column="10" lean-forward="true" selection-start-line="126" selection-start-column="10" selection-end-line="126" selection-end-column="10" />
+            <state relative-caret-position="2970">
+              <caret line="198" column="32" lean-forward="true" selection-start-line="198" selection-start-column="32" selection-end-line="198" selection-end-column="32" />
             </state>
           </provider>
         </entry>
@@ -122,8 +138,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Java/FCTPperfm.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="448">
-              <caret line="137" column="76" lean-forward="true" selection-start-line="137" selection-start-column="76" selection-end-line="137" selection-end-column="76" />
+            <state relative-caret-position="839">
+              <caret line="137" column="76" selection-start-line="137" selection-start-column="76" selection-end-line="137" selection-end-column="76" />
             </state>
           </provider>
         </entry>
@@ -131,8 +147,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Java/FCTPparam.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="274">
-              <caret line="468" column="24" lean-forward="true" selection-start-line="468" selection-start-column="24" selection-end-line="468" selection-end-column="24" />
+            <state relative-caret-position="660">
+              <caret line="297" column="40" lean-forward="true" selection-start-line="297" selection-start-column="40" selection-end-line="297" selection-end-column="40" />
             </state>
           </provider>
         </entry>
@@ -146,11 +162,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Java/FCTPmain.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="645">
-              <caret line="44" lean-forward="true" selection-start-line="44" selection-end-line="44" />
+            <state relative-caret-position="630">
+              <caret line="43" column="33" lean-forward="true" selection-start-line="43" selection-start-column="33" selection-end-line="43" selection-end-column="33" />
             </state>
           </provider>
         </entry>
@@ -158,17 +174,26 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Java/FCTPheur.ini">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="23" column="88" lean-forward="true" selection-start-line="23" selection-start-column="88" selection-end-line="23" selection-end-column="88" />
+            <state relative-caret-position="90">
+              <caret line="6" column="24" selection-start-line="6" selection-start-column="24" selection-end-line="6" selection-end-column="24" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Java/RL_composite.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-150">
-              <caret line="9" column="23" selection-start-line="9" selection-start-column="23" selection-end-line="9" selection-end-column="23" />
+            <state relative-caret-position="165">
+              <caret line="12" column="32" lean-forward="true" selection-start-line="12" selection-start-column="32" selection-end-line="12" selection-end-column="32" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Java/FCTPls.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="480">
+              <caret line="34" selection-start-line="34" selection-end-line="34" />
             </state>
           </provider>
         </entry>
@@ -176,7 +201,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Java/FCTPbas.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
+            <state relative-caret-position="1005">
               <caret line="69" column="19" selection-start-line="69" selection-start-column="19" selection-end-line="69" selection-end-column="19" />
             </state>
           </provider>
@@ -185,30 +210,30 @@
     </leaf>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Java/FCTPls.java" />
         <option value="$PROJECT_DIR$/Java/RL_composite2.java" />
         <option value="$PROJECT_DIR$/Java/RL_composite.java" />
         <option value="$PROJECT_DIR$/Java/CMCS.java" />
         <option value="$PROJECT_DIR$/Python/gym-FCTP/gym_FCTP/envs/FCTP_env.py" />
         <option value="$PROJECT_DIR$/Java/FCTPpop.java" />
-        <option value="$PROJECT_DIR$/Java/FCTPmain.java" />
-        <option value="$PROJECT_DIR$/Java/FCTPparam.java" />
-        <option value="$PROJECT_DIR$/Java/PEheur.java" />
-        <option value="$PROJECT_DIR$/Java/FCTPheur.java" />
+        <option value="$PROJECT_DIR$/Java/FCTPls.java" />
         <option value="$PROJECT_DIR$/Java/FCTPheur.ini" />
+        <option value="$PROJECT_DIR$/Java/PEheur.java" />
+        <option value="$PROJECT_DIR$/Java/FCTPparam.java" />
+        <option value="$PROJECT_DIR$/Java/FCTPheur.java" />
+        <option value="$PROJECT_DIR$/Java/FCTPmain.java" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="4">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="993" />
     <option name="y" value="26" />
     <option name="width" value="927" />
-    <option name="height" value="1054" />
+    <option name="height" value="1053" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -216,8 +241,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -234,10 +257,12 @@
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1558115469230" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1558117566753" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -265,10 +290,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="993" y="26" width="927" height="1054" extended-state="4" />
+    <frame x="67" y="26" width="1853" height="1054" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2860386" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14941892" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -300,13 +325,6 @@
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/Java/RL_composite2.java" />
-    <entry file="file://$PROJECT_DIR$/Java/FCTPls.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="18" column="42" selection-start-line="18" selection-start-column="42" selection-end-line="18" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Python/gym-FCTP/gym_FCTP/envs/FCTP_env.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5070">
@@ -324,6 +342,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Java/FCTPsol.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="930">
+          <caret line="65" column="13" selection-start-line="65" selection-start-column="13" selection-end-line="65" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Java/FCTPpop.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
@@ -331,73 +356,71 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Java/FCTPsol.java">
+    <entry file="file://$PROJECT_DIR$/Java/FCTPheur.ini">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="65" column="13" selection-start-line="65" selection-start-column="13" selection-end-line="65" selection-end-column="13" />
+        <state relative-caret-position="90">
+          <caret line="6" column="24" selection-start-line="6" selection-start-column="24" selection-end-line="6" selection-end-column="24" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Java/FCTPbas.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
+        <state relative-caret-position="1005">
           <caret line="69" column="19" selection-start-line="69" selection-start-column="19" selection-end-line="69" selection-end-column="19" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Java/FCTPperfm.java">
+    <entry file="file://$PROJECT_DIR$/Java/FCTPls.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="448">
-          <caret line="137" column="76" lean-forward="true" selection-start-line="137" selection-start-column="76" selection-end-line="137" selection-end-column="76" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Java/FCTPparam.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="274">
-          <caret line="468" column="24" lean-forward="true" selection-start-line="468" selection-start-column="24" selection-end-line="468" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Java/PEheur.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="734">
-          <caret line="829" column="22" lean-forward="true" selection-start-line="829" selection-start-column="22" selection-end-line="829" selection-end-column="22" />
-          <folding>
-            <element signature="method#modified_cost_local_search#0;class#PEheur#0" />
-            <element signature="docComment;method#intensify_diversify#0;class#PEheur#0" />
-            <element signature="docComment;method#IRNLS#0;class#PEheur#0" />
-            <element signature="docComment;method#IRNLS_v2#0;class#PEheur#0" />
-            <element signature="docComment;method#PIRNLS#0;class#PEheur#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Java/FCTPheur.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="554">
-          <caret line="126" column="10" lean-forward="true" selection-start-line="126" selection-start-column="10" selection-end-line="126" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Java/FCTPheur.ini">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" column="88" lean-forward="true" selection-start-line="23" selection-start-column="88" selection-end-line="23" selection-end-column="88" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Java/FCTPmain.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="645">
-          <caret line="44" lean-forward="true" selection-start-line="44" selection-end-line="44" />
+        <state relative-caret-position="480">
+          <caret line="34" selection-start-line="34" selection-end-line="34" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Java/RL_composite.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-150">
-          <caret line="9" column="23" selection-start-line="9" selection-start-column="23" selection-end-line="9" selection-end-column="23" />
+        <state relative-caret-position="165">
+          <caret line="12" column="32" lean-forward="true" selection-start-line="12" selection-start-column="32" selection-end-line="12" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Java/PEheur.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="689">
+          <caret line="897" column="72" lean-forward="true" selection-start-line="897" selection-start-column="72" selection-end-line="897" selection-end-column="72" />
+          <folding>
+            <element signature="docComment;method#intensify_diversify#0;class#PEheur#0" />
+            <element signature="docComment;method#IRNLS#0;class#PEheur#0" />
+            <element signature="docComment;method#IRNLS_v2#0;class#PEheur#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Java/FCTPperfm.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="839">
+          <caret line="137" column="76" selection-start-line="137" selection-start-column="76" selection-end-line="137" selection-end-column="76" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Java/FCTPparam.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="660">
+          <caret line="297" column="40" lean-forward="true" selection-start-line="297" selection-start-column="40" selection-end-line="297" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Java/FCTPheur.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2970">
+          <caret line="198" column="32" lean-forward="true" selection-start-line="198" selection-start-column="32" selection-end-line="198" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Java/FCTPmain.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="630">
+          <caret line="43" column="33" lean-forward="true" selection-start-line="43" selection-start-column="33" selection-end-line="43" selection-end-column="33" />
         </state>
       </provider>
     </entry>

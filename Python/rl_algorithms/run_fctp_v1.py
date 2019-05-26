@@ -33,7 +33,7 @@ parser.add_argument(
 )
 parser.add_argument("--log", dest="log", action="store_true", help="turn on logging")
 parser.add_argument("--save-period", type=int, default=200, help="save model period")
-parser.add_argument("--episode-num", type=int, default=100, help="total episode num")
+parser.add_argument("--episode-num", type=int, default=10000, help="total episode num")
 parser.add_argument(
     "--max-episode-steps", type=int, default=100000, help="max episode step"
 )
@@ -51,7 +51,7 @@ args = parser.parse_args()
 
 def main():
     # env initialization
-    env_name = "FCTP-v0"
+    env_name = "FCTP-v1"
     env = env_generator_FCTP(env_name, 100000)  # max_episode_steps
     env_utils.set_env(env, args)
     env.set_comp(False)  # True for two component actions, False for one
@@ -60,7 +60,7 @@ def main():
     common_utils.set_random_seed(args.seed, env)
 
     # run
-    module_path = "fctp_v0." + args.algo  # Set agent type from algo argument from cmd line
+    module_path = "fctp_v1." + args.algo  # Set agent type from algo argument from cmd line
 
     example = importlib.import_module(module_path)
     example.run(env, env_name, args)

@@ -44,19 +44,19 @@ public class RL_composite extends FCTPheur {
             {
                 case 0: LS_first_acc();  break;
                 case 1: LS_best_acc(); break;
-                case 2: RNLS(50, 20);  break; //LS_best_random_acc(false, 50, 20);
+                case 2: RNLS(50, 20);  break; 
                 case 3: RNLS((m+n-1)/5, 20); break;
                 case 4: Kicksolution(0);  break;
-                case 5: Kicksolution_greedy(0, rc1); break;  //When initial experiments are done, change 0
+                case 5: Kicksolution_greedy(0, rc1); break;  
                 case 6: Kicksolution_greedy(0, rc2); break;
                 case 7: Kicksolution_greedy(0, rc3); break;
-                case 8: solution.Overwrite(best_sol); break; //Go back to best solution
+                case 8: solution.Overwrite(best_sol); break; 
                 case 9: cur_sol.Overwrite(solution); break; //Store solution
                 case 10: solution.Overwrite(cur_sol); break; //Go back to stored solution
                 case 11: RTR_move(solution.totalCost); break;
                 case 12: modified_cost_local_search(1,0); break;
-                case 13: modified_cost_local_search(2,0); break; //subject to change! Maybe better ways of adjusting costs
-                case 14: modified_cost_local_search(3,0); break; //subject to change! Maybe better ways of adjusting costs
+                case 13: modified_cost_local_search(2,0); break; 
+                case 14: modified_cost_local_search(3,0); break; 
                 case 15: modified_cost_local_search(4,0); break;
                 case 16: modified_cost_local_search(5,0); break;
             }

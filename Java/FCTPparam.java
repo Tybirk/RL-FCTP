@@ -287,9 +287,17 @@ public class FCTPparam
   /** Constant: Possible value of parameter "impMethod" */
   public static final int CPXOPT=500;
 
-  public static final int MCTS_FAST=21;
+  public static final int IRNLS=50;
 
-  public static final int MCTS_RAND=22;
+  public static final int IRNLSv2=51;
+
+  public static final int PIRNLS1=52;
+
+  public static final int PIRNLS2=53;
+
+  public static final int PIRNLSv2_1=54;
+
+  public static final int PIRNLSv2_2=55;
 
   /**
    * Constructor for objects of class FCTPparam: sets parameters to default values
