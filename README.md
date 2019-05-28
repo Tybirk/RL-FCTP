@@ -36,6 +36,8 @@ cd Python/gym-FCTP
 pip install -e .
 ```
 
+The code underlying code for the environment can be found [here](https://github.com/Tybirk/RL-FCTP/blob/master/Python/gym-FCTP/gym_FCTP/envs/FCTP_env.py).
+
 ### Usages
 
 #### Java part
@@ -62,10 +64,8 @@ The hyperparameters for each run can be modified in the folder Python/rl_algorit
 
 ##### Arguments for run-files
 
-In addition, there are various argument settings for running algorithms. If you check the options to run file you should command 
-```
-python <run-file> -h
-```
+In addition, there are various argument settings for running algorithms. The following arguments may be used. 
+
 - `--test`
     - Start test mode (no training).
 - `--off-render`
