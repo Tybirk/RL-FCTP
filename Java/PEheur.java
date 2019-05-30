@@ -3,6 +3,13 @@ import java.lang.management.ThreadMXBean;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ * Heuristics for the Fixed Charge Transportation Problem (FCTP)
+ *
+ * @author  Peter Emil Tybirk
+ * @version 29/05/2019
+ */
+
 public class PEheur extends FCTPls {
     public double[] gvals1;
     public double[] gvals2;
@@ -24,6 +31,11 @@ public class PEheur extends FCTPls {
         this.rc2 = get_random_collection(gvals2, true);
         this.rc3 = get_random_collection(gvals3, true);
     }
+
+    public PEheur(int mm, int nn, int[] s, int[] d, double[] tc, double[] fc, boolean copyDat) {
+        super(mm, nn, s, d, tc, fc, copyDat);
+    }
+
 
     /**
      * Greedy1 evaluation
@@ -110,9 +122,8 @@ public class PEheur extends FCTPls {
     }
 
     /**
-     * Greedy3 evaluation. Equal to greedy2 valuation, but with fixed cost saved per unit
-     * if full supply or demand is met subtracted.
-     * The idea is to favor degeneracy.
+     * Greedy3 evaluation. Equal to greedy2 valuation, but additional minimal cost per unit
+     * if full supply or demand is not med added
      *
      * @param k number of best customers/suppliers to calculate average over
      * @return Array of greedy evaluations
@@ -121,42 +132,36 @@ public class PEheur extends FCTPls {
         double[] gvals3 = new double[narcs];
         double[] gvals2 = get_greedy_values_2(k);
 
-        double[] best_fcosts_supplier = new double[m];
-        double[] best_fcosts_customer = new double[n];
-        Arrays.fill(best_fcosts_supplier, 999999.0);
-        Arrays.fill(best_fcosts_customer, 999999.0);
-
-        //calculate best fixed costs arcs
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                double cur_fcost = getfcost(i * n + j);
-
-                if (cur_fcost < best_fcosts_supplier[i]) {
-                    best_fcosts_supplier[i] = cur_fcost;
-                }
-
-                if (cur_fcost < best_fcosts_customer[j]) {
-                    best_fcosts_customer[j] = cur_fcost;
-                }
-            }
-        }
-
         // Calculate greedy evaluation by finding greedy2 value and then
-        // subtracting saved fixed cost if full demand or supply for the customer can be met on the arc
+        // adding additional cost per unit needed
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
+                int sup = supply[i];
+                int dem = demand[j];
 
-                double cap = getCap(i * n + j);
-                double gval2 = gvals2[i * n + j];
+                double gval3 = gvals2[i * n + j];
 
-                if (cap >= supply[i]) gval2 -= best_fcosts_supplier[i] / cap; //fixed cost saved from supplier
-                if (cap >= demand[j]) gval2 -= best_fcosts_customer[j] / cap; //fixed cost saved from customer
+                double min_extra_cost = 999999.0;
 
-                gvals3[i * n + j] = gval2;
+                if (sup > dem) {
+                    for (int l = 0; l < n; l++) { //Run through customers
+                        if (l == j) continue;
+                        double cost_per_unit = gettcost(i * n + l) + getfcost(i * n + l) / ((double) sup - dem);
+                        if (cost_per_unit < min_extra_cost) min_extra_cost = cost_per_unit;
+                    }
+                    gval3 += min_extra_cost;
+                } else if (dem > sup) {
+                    for (int l = 0; l < m; l++) { //Run through suppliers
+                        if (l == i) continue;
+                        double cost_per_unit = gettcost(l * n + j) + getfcost(l * n + j) / ((double) dem - sup);
+                        if (cost_per_unit < min_extra_cost) min_extra_cost = cost_per_unit;
+                    }
+                    gval3 += min_extra_cost;
+                }
+                gvals3[i * n + j] = gval3;
             }
 
         }
-
 
         return gvals3;
     }
@@ -201,7 +206,11 @@ public class PEheur extends FCTPls {
     }
 
     /**
-     * Get a random collection with weights according to evaluation measure (greedy_vals).
+     * Get a random collection with weights according to evaluation measure.
+     *
+     * @param greedy_vals       Array where the i'th entry has an evaluation of the i'th arc
+     * @param smaller_is_better Whether or not a small value is better in the evaluation measure
+     * @return A random collection instance
      */
     public RandomCollection<Integer> get_random_collection(double[] greedy_vals, boolean smaller_is_better) {
         double[] gvals = greedy_vals;
@@ -234,7 +243,7 @@ public class PEheur extends FCTPls {
 
         do {
             // Generate random neighbourhood
-            Set<Integer> random_neighbourhood = new LinkedHashSet<Integer>(); // Note: use LinkedHashSet to maintain insertion order
+            Set<Integer> random_neighbourhood = new LinkedHashSet<Integer>();
             while (random_neighbourhood.size() < narcs / splits) {
                 Integer next = randgen.nextInt(narcs);
                 // As we're adding to a set, this will automatically do a containment check
@@ -244,6 +253,52 @@ public class PEheur extends FCTPls {
             // Run through the random neighbourhood and find best move
             double bestSav = -9999999;
             for (int arc : random_neighbourhood) {
+                if (solution.arc_stat[arc] != BASIC) {
+                    double saving = getCostSav(arc);
+                    if (saving != 0 && saving > bestSav) {
+                        bestSav = saving;
+                        RememberMove();
+                    }
+                }
+            }
+
+            DoMove();
+
+            // Check for new best solution
+            if (solution.totalCost < best_sol.totalCost) {
+                best_sol.Overwrite(solution);
+                improved = true;
+            }
+
+            iter++;
+
+        } while (iter < max_iter);
+
+        // If a new best solution has been found, we move back to that one
+        if (improved) {
+            solution.Overwrite(best_sol);
+        }
+    }
+
+    /**
+     * Random neighbourhood local search, faster implementation, but the neighbourhood may include duplicates
+     * we did not use this in our experiments, but it would likely speed up the procedure slightly.
+     *
+     * @param max_iter maximum number of iterations
+     * @param splits   the number of partitions of the total neighbourhood, governs size of random neighbourhood
+     */
+
+    public void RNLS_fast(int max_iter, int splits) {
+        int iter = 0;
+        FCTPsol best_sol = new FCTPsol(solution);
+        boolean improved = false;
+        int arc = 0;
+
+        do {
+            // Run through the random neighbourhood and find best move
+            double bestSav = -9999999;
+            for (int i = 0; i < narcs / splits; i++) {
+                arc = randgen.nextInt(narcs);
                 if (solution.arc_stat[arc] != BASIC) {
                     double saving = getCostSav(arc);
                     if (saving != 0 && saving > bestSav) {
@@ -394,14 +449,15 @@ public class PEheur extends FCTPls {
     /**
      * Assign cost to each arc in current solution at full capacity according to array of costs
      *
-     * @return Array of costs of length narcs, which is 0 for all arcs outside current solution
+     * @param eval_array Array with arc evaluations
+     * @return Array of evaluations of length narcs, which is 0 for all arcs outside current solution
      */
-    public double[] get_arc_costs_from_array(double[] array) {
+    public double[] get_arc_costs_from_array(double[] eval_array) {
         double[] arc_costs = new double[narcs];
         Arrays.fill(arc_costs, 0.0);
         for (int arc = 0; arc < narcs; arc++) {
             if (solution.flow[arc] > 0) {
-                arc_costs[arc] = array[arc];
+                arc_costs[arc] = eval_array[arc];
             }
         }
         return arc_costs;
@@ -442,7 +498,8 @@ public class PEheur extends FCTPls {
     /**
      * Evaluation based ILS
      *
-     * @param rc Random collection to draw arcs from
+     * @param rc       Random collection to draw arcs from
+     * @param max_runs Maximum number of iterations without improvement to the objective value
      */
     public void Evaluation_based_IRNLS(RandomCollection<Integer> rc, int max_runs) {
 
@@ -513,6 +570,8 @@ public class PEheur extends FCTPls {
      * Afterwards, we reverse the evaluations and do the Evaluation based IRNLS again.
      *
      * @param init_sols Array of high quality solutions
+     * @param max_runs  Maximum number of iterations without improvement to the objective value
+     * @param v2        whether or not to use version 2 of IRNLS
      * @return Array of updated solution after intensification and diversification procedure.
      */
     public FCTPsol[] intensify_diversify(FCTPsol[] init_sols, int max_runs, boolean v2) {
@@ -759,7 +818,7 @@ public class PEheur extends FCTPls {
                 num_cur_fail = 0;
                 num_best_fail = 0;
             }
-            if (iter % 2 == 0) RNLS(50, 30);
+            if (iter % 2 == 0) RNLS(50, 20);
             else {
                 // Smaller pool of mutations, fixed order
                 if (iter % 6 == 1) {
@@ -780,7 +839,7 @@ public class PEheur extends FCTPls {
     /**
      * Evaluation based ILS, second version.
      *
-     * @param rc Random collection to draw arcs from
+     * @param rc       Random collection to draw arcs from
      * @param max_runs Maximal number of runs without improvement
      */
     public void Evaluation_based_IRNLS_v2(RandomCollection<Integer> rc, int max_runs) {

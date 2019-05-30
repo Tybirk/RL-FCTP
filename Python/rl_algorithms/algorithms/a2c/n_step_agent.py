@@ -58,6 +58,9 @@ class A2CAgent(Agent):
         """
         Agent.__init__(self, env, args)
         self.n_step = n_step
+        if "N-STEP" in self.hyper_params:
+            self.n_step = self.hyper_params["N-STEP"]
+
         self.actor, self.critic = models
         self.actor_optimizer, self.critic_optimizer = optims
         self.hyper_params = hyper_params

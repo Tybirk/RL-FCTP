@@ -1,7 +1,6 @@
-"""Run module for DQN on PongNoFrameSkip.
+"""Run module for DQN on the FCTP
 
-- Author: Curt Park
-- Contact: curt.park@medipixel.io
+- Author: Peter Emil Tybirk
 """
 
 import argparse

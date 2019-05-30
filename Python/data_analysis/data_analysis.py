@@ -210,9 +210,6 @@ def get_upper_bounds(instance_names, from_file=True):
 
 
 
-
-
-
 def get_relative_performance(results1, results2, names, upper_bounds, lower_bounds):
     measure = []
     for name in names:

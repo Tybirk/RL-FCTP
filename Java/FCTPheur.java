@@ -47,8 +47,8 @@ public class FCTPheur extends FCTPpop {
      * Method for constructing a first feasible solution.
      */
     public void initialSolution() throws Exception {
-        //if (randgen.nextBoolean()) LPheu();
-        //else RandGreedy(0.4);
+        if (randgen.nextBoolean()) LPheu();
+        else RandGreedy(0.4);
         perfMeter.resetStats();
         if (FCTPparam.greedy_meas <= 0) {
             if (!LPheu()) throw new Exception("LP heuristic failed to give basic solution");
@@ -176,7 +176,7 @@ public class FCTPheur extends FCTPpop {
                     population_sizes3[0] = 100;
                     population_sizes3[1] = 10;
                     int[] max_runs3 = new int[2];
-                    max_runs3[0] = 1500;
+                    max_runs3[0] = 1600;
                     max_runs3[1] = 2000;
                     PIRNLS(population_sizes3, max_runs3, true);
                     break;

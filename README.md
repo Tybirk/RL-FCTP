@@ -14,10 +14,10 @@ This repository contains Java classes to represent instances of the fixed charge
 ## Getting started
 
 ### Prerequisites
-* This repository is tested on [Anaconda](https://www.anaconda.com/distribution/) virtual environment with Python 3.6.1+
+* This repository is tested on [Anaconda](https://www.anaconda.com/distribution/) virtual environment with Python 3.6.1+. If needed, you can create an environment for this repository in this way:
     ```
-    $ conda create -n rl_algorithms python=3.6.1
-    $ conda activate rl_algorithms
+    $ conda create -n rl-fctp python=3.6.1
+    $ conda activate rl-fctp
     ```
 
 ### Installation
@@ -25,7 +25,7 @@ First, clone the repository.
 ```
 git clone https://github.com/Tybirk/RL-FCTP.git
 ```
-Secondly, install packages required to execute the code. Just type:
+Secondly, if you want to experiment with the RL part, install packages required to execute the code. Just type:
 ```
 pip install -r requirements.txt
 ```

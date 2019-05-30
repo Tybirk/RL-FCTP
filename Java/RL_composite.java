@@ -2,6 +2,13 @@ import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
 
+/**
+ * A bridge for RL agents to invoke actions on instances of the FCTP
+ *
+ * @author  Peter Emil Tybirk
+ * @version 29/05/2019
+ */
+
 public class RL_composite extends FCTPheur {
     public FCTPsol best_sol;
     public FCTPsol cur_sol;
@@ -16,6 +23,11 @@ public class RL_composite extends FCTPheur {
         this.cur_sol = new FCTPsol(solution);
     }
 
+    /**
+     * Method for invoking an action to mutate a feasible solution
+     * @param action Integer indicating which action to take
+     * @param two_component Whether or not to use two component actions
+     */
     public void do_action(int action, boolean two_component){
         if (two_component){
             switch ( action )

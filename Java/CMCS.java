@@ -43,8 +43,12 @@ public class CMCS extends FCTPheur {
 
     }
 
-    // Method for running the current configuration,
-    // if time_budget is 0 we instead run for a maximum of FCTPparam.max_no_imp iterations without improvement
+    /**
+     * Method for running the current configuration,
+     *
+     * @param time_budget time_budget in milliseconds. If it is 0 we instead run for a maximum of FCTPparam.max_no_imp
+     *                    iterations without improvement
+     */
     public void Solve(int time_budget) {
         // Initialize solution
         if(randgen.nextBoolean() == true) RandGreedy(0.3);
@@ -113,7 +117,10 @@ public class CMCS extends FCTPheur {
         }
     }
 
-    // Method for setting next component based on configuration matrices
+    /**
+     * Method for setting next component based on configuration matrices
+     * @param improved Boolean indicating whether the last selected component improved the solution
+     */
     public void set_next_component(boolean improved){
         current_component_idx = component_to_idx.get(current_component);
 
@@ -135,7 +142,9 @@ public class CMCS extends FCTPheur {
         }
     }
 
-    // Specify which idx corresponds to which action, and specify actions
+    /**
+     * Applies current component
+     */
     public void use_current_component(){
         switch ( current_component ) {
             case 1: modified_cost_local_search(4,0); LS_best_acc(); break;
@@ -152,8 +161,10 @@ public class CMCS extends FCTPheur {
         }
     }
 
-    // Run and log
-    public void run_cmcs(String[] args){
+    /**
+     * Run CMCS and log results
+     */
+    public void run_cmcs(){
         for (int i = 0; i < FCTPparam.num_runs; i++) {
             Solve(0);
         }
@@ -166,7 +177,10 @@ public class CMCS extends FCTPheur {
     }
 
 
-    // Test of configuration
+    /**
+     * Try a configuration
+     * @param args Where to find the instance
+     */
     public static void main ( String[] args ) {
 
         // Tell class FCTPparam about initialization file, input and output filename
@@ -203,7 +217,7 @@ public class CMCS extends FCTPheur {
             m_fail[2][2] = false;
 
             CMCS cmcs = new CMCS(args[0], components, m_suc, m_fail);
-            cmcs.run_cmcs(args);
+            cmcs.run_cmcs();
             // Compute initial solution
 
         } catch (Exception exc) {

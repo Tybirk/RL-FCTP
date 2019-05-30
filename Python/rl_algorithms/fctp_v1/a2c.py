@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Run module for A2C on LunarLanderContinuous-v2.
+"""Run module for A2C on FCTp
 
-- Author: Curt Park
-- Contact: curt.park@medipixel.io
+- Author: Peter Emil Tybirk
 """
 
 import argparse

@@ -61,18 +61,19 @@ public class FCTPbas
   //protected FCTPsol solution;
   public FCTPsol solution;
 
+  /** Object to store solutions in for RL agents */
   public FCTPsol saved_sol;
 
+  /** Object to store best solution in for RL agents */
   public FCTPsol best_solution;
    
   /** random number generator. See Oracle's help center for a description of this class:
       https://docs.oracle.com/javase/7/docs/api/java/util/Random.html */
-  protected Random randgen = new Random();     
-  
+  protected Random randgen = new Random();
+
   /**
-   * Allocates the memory required for the data, initializes arc data
-   * 
-   * @param makeMem equals true if memory for keeping supply, demand and cost data has to be allocated
+   * Get the percentage of fixed costs in current solution, used by RL agents
+   * @return percentage of fixed costs in current solution
    */
   public double get_fcost_percent(){
     int count = 0;
@@ -85,6 +86,9 @@ public class FCTPbas
   }
 
 
+  /**
+   * Initialize saved_sol and best_sol, used by RL agents
+   */
   public void initialize_sols(){
     if(saved_sol == null){
       saved_sol = new FCTPsol(solution);
@@ -94,6 +98,9 @@ public class FCTPbas
     }
   }
 
+  /**
+   * Store a solution, used by RL agents
+   */
   public void save_sol(){
     if(saved_sol == null){
       saved_sol = new FCTPsol(solution);
@@ -103,10 +110,19 @@ public class FCTPbas
     }
   }
 
+  /**
+   * Check if an arc is basic, used by RL agents
+   * @param arc the arc
+   * @return Boolean indicating whether the arc is basic
+   */
   public boolean isBasic(int arc){
     return solution.arc_stat[arc] == BASIC;
   }
 
+  /**
+   * Get all possible solutions reached by a single basic exchange, used by RL agents
+   * @return Arraylist of FCTPsols with resulting solutions
+   */
   public ArrayList<FCTPsol> get_possible_moves(){
     ArrayList<FCTPsol> sols = new ArrayList<FCTPsol>();
     FCTPsol cur_sol = new FCTPsol(solution);
@@ -120,6 +136,11 @@ public class FCTPbas
     return sols;
   }
 
+  /**
+   * Generate arraylist of different random integers
+   * @param size Maximum size of integer
+   * @return Arraylist of random integers
+   */
   public ArrayList<Integer> gen_random_ints(int size){
     if(size >= narcs){
       ArrayList<Integer> numbers = new ArrayList<Integer>(narcs);
@@ -143,6 +164,12 @@ public class FCTPbas
     }
     return new ArrayList<Integer>(generated);
   }
+
+  /**
+   * A forward look to what happens if the arcs from the list moves are introduces into the basis, used by RL agents
+   * @param moves Arcs to try to introduce into the basis
+   * @return Resulting solutions by applying basic exchanges corresponding to the arcs in moves
+   */
   public ArrayList<FCTPsol> get_subset_of_moves(ArrayList<Integer> moves){
     ArrayList<FCTPsol> sols = new ArrayList<FCTPsol>();
     FCTPsol cur_sol = new FCTPsol(solution);
@@ -158,11 +185,17 @@ public class FCTPbas
   }
 
 
-
+  /**
+   * Restore saved solution, use by RL agents
+   */
   public void restore_sol(){
     solution.Overwrite(saved_sol);
   }
 
+
+  /**
+   * Update best solution, used by RL agents
+   */
   public void update_best_sol(){
     if(best_solution == null) {
        best_solution = new FCTPsol(solution);
@@ -172,6 +205,11 @@ public class FCTPbas
     }
   }
 
+  /**
+   * Allocates the memory required for the data, initializes arc data
+   *
+   * @param makeMem equals true if memory for keeping supply, demand and cost data has to be allocated
+   */
   private void allocMem( boolean makeMem )
   {
     nnodes = m+n;

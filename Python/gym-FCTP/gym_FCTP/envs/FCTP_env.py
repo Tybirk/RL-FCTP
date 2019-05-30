@@ -7,15 +7,15 @@ import jnius_config
 from collections import deque
 import random
 
-path = '/home/tybirk/Desktop/Thesis_Code/Java'  # Change to directory containing the java code
-os.chdir(path)
-
+java_path = '/home/tybirk/Desktop/Thesis_Code/Java'
+os.chdir(java_path)  # Unfortunately seems necessary for Pyjnius to work, means logging files are in Java folder
+fctp_env_path = '/home/tybirk/Desktop/Thesis_Code/Python/gym-FCTP/gym_FCTP/envs/'
 
 """
-Establish connection to java code via pyjnius
+Establish connection to java code via pyjnius - set path above!
 """
 try:
-    jnius_config.set_classpath('./', path)
+    jnius_config.set_classpath('./', java_path)
 except ValueError:
     print("Value error when setting classpath, proceed anyway")  # Error when path already set
 
@@ -26,132 +26,13 @@ except KeyError:
     from jnius import autoclass
 
 
-
-
-
 class FCTPEnv(gym.Env):
     metadata = {'render.modes': ['human']}
     reward_range = (-50, 500)  # Set range which includes all possible rewards
 
     def __init__(self):
-        names = ['N3000',
-                 'N3001',
-                 'N3002',
-                 'N3003',
-                 'N3004',
-                 'N3005',
-                 'N3006',
-                 'N3007',
-                 'N3008',
-                 'N3009',
-                 'N300A',
-                 'N300B',
-                 'N300C',
-                 'N300D',
-                 'N300E',
-                 'N3100',
-                 'N3101',
-                 'N3102',
-                 'N3103',
-                 'N3104',
-                 'N3105',
-                 'N3106',
-                 'N3107',
-                 'N3108',
-                 'N3109',
-                 'N310A',
-                 'N310B',
-                 'N310C',
-                 'N310D',
-                 'N310E',
-                 'N3200',
-                 'N3201',
-                 'N3202',
-                 'N3203',
-                 'N3204',
-                 'N3205',
-                 'N3206',
-                 'N3207',
-                 'N3208',
-                 'N3209',
-                 'N320A',
-                 'N320B',
-                 'N320C',
-                 'N320D',
-                 'N320E',
-                 'N3300',
-                 'N3301',
-                 'N3302',
-                 'N3303',
-                 'N3304',
-                 'N3305',
-                 'N3306',
-                 'N3307',
-                 'N3308',
-                 'N3309',
-                 'N330A',
-                 'N330B',
-                 'N330C',
-                 'N330D',
-                 'N330E',
-                 'N3400',
-                 'N3401',
-                 'N3402',
-                 'N3403',
-                 'N3404',
-                 'N3405',
-                 'N3406',
-                 'N3407',
-                 'N3408',
-                 'N3409',
-                 'N340A',
-                 'N340B',
-                 'N340C',
-                 'N340D',
-                 'N340E',
-                 'N3500',
-                 'N3501',
-                 'N3502',
-                 'N3503',
-                 'N3504',
-                 'N3505',
-                 'N3506',
-                 'N3507',
-                 'N3508',
-                 'N3509',
-                 'N350A',
-                 'N350B',
-                 'N350C',
-                 'N350D',
-                 'N350E',
-                 'N3600',
-                 'N3601',
-                 'N3602',
-                 'N3603',
-                 'N3604',
-                 'N3605',
-                 'N3607',
-                 'N3608',
-                 'N3609',
-                 'N360A',
-                 'N360B',
-                 'N360C',
-                 'N360D',
-                 'N360E',
-                 'N3700',
-                 'N3701',
-                 'N3702',
-                 'N3703',
-                 'N3704',
-                 'N3705',
-                 'N3707',
-                 'N3708',
-                 'N3709',
-                 'N370A',
-                 'N370B',
-                 'N370C',
-                 'N370D',
-                 'N370E']
+        # Names - notice that we omit N3606 and N3706 due to bugs with LP heuristic
+        names = np.genfromtxt(fctp_env_path + 'instance_names.txt', dtype='str')
         self.instance_names = ['Glover/' + name + '.FCTP' for name in names]  # Set to correct folder
 
         self.idx_dict = {x: i for i, x in enumerate(self.instance_names)}  # Associate each instance with an idx
@@ -176,7 +57,7 @@ class FCTPEnv(gym.Env):
 
         self.actions_taken = []
         self.step_number = 0
-        self.success_last_20 = deque(maxlen=20)  # Keep track of succeses of last 20 actions
+        self.success_last_20 = deque(maxlen=20)  # Keep track of successes of last 20 actions
         self.action_history = deque(maxlen=20)  # Keep track of last 20 actions
         self.n_runs = 0
         self.best_sol_val = 0
@@ -188,139 +69,12 @@ class FCTPEnv(gym.Env):
         self.outfile = open("action_log.txt", "w+")
         self.outfile.close()
 
-        self.upper_bounds = [168777.0, 168146.0, 168926.0, 169410.0, 168257.0, 168998.0, 168212.0, 168680.0, 166768.0,
-                             168035.0, 168147.0, 169697.0, 166707.0, 167358.0, 170632.0, 180541.0, 180510.0, 181183.0,
-                             180981.0, 181029.0, 181098.0, 180193.0, 180976.0, 180021.0, 179277.0, 180696.0, 182173.0,
-                             178894.0, 179621.0, 182210.0, 203848.0, 205221.0, 205921.0, 204263.0, 205614.0, 205554.0,
-                             203242.0, 203930.0, 204119.0, 201875.0, 206008.0, 206877.0, 202551.0, 203539.0, 205445.0,
-                             250121.0, 249342.0, 252250.0, 245753.0, 251187.0, 251632.0, 247395.0, 249280.0, 242916.0,
-                             248415.0, 252601.0, 253498.0, 247658.0, 247888.0, 249883.0, 329655.0, 328335.0, 334581.0,
-                             324310.0, 338256.0, 336314.0, 324346.0, 324088.0, 325279.0, 330083.0, 335221.0, 337374.0,
-                             333088.0, 332262.0, 332202.0, 484798.0, 478337.0, 481167.0, 470527.0, 487687.0, 492921.0,
-                             475828.0, 469898.0, 477325.0, 485149.0, 489043.0, 496293.0, 498369.0, 498369.0, 484315.0,
-                             767436.0, 764958.0, 764492.0, 760602.0, 777690.0, 775318.0, 754795.0, 764236.0, 771304.0,
-                             791767.0, 785277.0, 777567.0, 777567.0, 779153.0, 1349313.0, 1315384.0, 1325421.0,
-                             1337367.0, 1331474.0, 1350880.0, 1302123.0, 1329854.0, 1323512.0, 1368217.0, 1384662.0,
-                             1355945.0, 1355945.0, 1317375.0]  # Upper bounds corresponding to instance names
+        # LP Upper bounds corresponding to instance names
+        self.upper_bounds = np.loadtxt(fctp_env_path + 'upper_bounds.txt')
 
-        self.lower_bounds = [167737,
-                             166473,
-                             167541,
-                             168198,
-                             167074,
-                             167387,
-                             165562,
-                             166980,
-                             165384,
-                             166882,
-                             167192,
-                             168327,
-                             165123,
-                             166062,
-                             169177,
-                             178299,
-                             177152,
-                             178292,
-                             178489,
-                             178753,
-                             177726,
-                             176161,
-                             177299,
-                             175810,
-                             177089,
-                             178558,
-                             179173,
-                             175298,
-                             176941,
-                             179351,
-                             198517,
-                             197898,
-                             199208,
-                             198252,
-                             200059,
-                             197769,
-                             196071,
-                             196937,
-                             195639,
-                             197086,
-                             199377,
-                             200057,
-                             195019,
-                             197085,
-                             199328,
-                             237220,
-                             236557,
-                             237746,
-                             235481,
-                             239606,
-                             236106,
-                             234021,
-                             233777,
-                             233312,
-                             236227,
-                             239517,
-                             238615,
-                             232750,
-                             234418,
-                             236167,
-                             307279,
-                             306404,
-                             310610,
-                             302880,
-                             311985,
-                             307561,
-                             304424,
-                             302817,
-                             305135,
-                             308254,
-                             312607,
-                             309900,
-                             304055,
-                             304869,
-                             307315,
-                             440880,
-                             438005,
-                             444003,
-                             431410,
-                             449277,
-                             439854,
-                             437289,
-                             432158,
-                             438444,
-                             443750,
-                             449041,
-                             444519,
-                             440203,
-                             440734,
-                             443741,
-                             698688,
-                             694071,
-                             691340,
-                             684562,
-                             706189,
-                             692928,
-                             681441,
-                             693838,
-                             691868,
-                             707272,
-                             703234,
-                             700759,
-                             700759,
-                             693381,
-                             1197613,
-                             1186310,
-                             1172668,
-                             1170230,
-                             1203084,
-                             1186342,
-                             1169810,
-                             1192859,
-                             1186592,
-                             1216295,
-                             1199189,
-                             1198455,
-                             1198455,
-                             1176172]  # Buson lower bounds corresponding to instance names
+        # Best objectives obtained by Buson et al. (not true lower bounds!), alternative my best results
+        # self.lower_bounds = np.loadtxt(fctp_env_path + 'buson_results.txt')
+        self.lower_bounds = np.loadtxt(fctp_env_path + 'my_results.txt')
 
         self.state = None
 
@@ -450,6 +204,25 @@ class FCTPEnv(gym.Env):
     def seed(self, x):
         random.seed(x)
 
+    def get_solution_features(self, instance, old_features, upper_bound, lower_bound):
+        """
+        Updates solution features based on current state of instance, old features and lower and upper bounds.
+        :param instance: Java class RL_composite type with solution information etc.
+        :param old_features: Features from latest timestep
+        :param upper_bound: Upper bound on solution value for this instance
+        :param lower_bound: Lower bound on solution value for this instance (not necesarily true lower bound)
+        :return: Current performance, best performance, relative positive flow, success of latest action,
+        percentage of costs which are fixed costs and number of last 20 actions which were successes.
+        """
+        perf = get_relative_performance(instance.solution.totalCost, upper_bound, lower_bound)
+        best_perf = perf if perf > old_features[1] else old_features[1]
+        rel_pos_flow = instance.solution.get_rel_pos_flow()  # Call to java method
+        success_latest = perf > old_features[0]
+        self.success_last_20.append(success_latest)
+        fcost_perc = instance.get_fcost_percent()  # Call to java method
+
+        return perf, best_perf, rel_pos_flow, success_latest, fcost_perc, sum(self.success_last_20)
+
     def IRNLS(self, max_no_improve, name):
         """
         A generator function allowing the agent to start of training by following the IRNLS policy
@@ -460,7 +233,7 @@ class FCTPEnv(gym.Env):
         """
 
         self.name = name
-        self.instance = autoclass('RL_composite')(self.name)
+        self.instance = autoclass(java_path + 'RL_composite')(self.name)
         num_fail = 0
         num_cur_fail = 0
         num_cur_fail_2 = 0
@@ -479,7 +252,7 @@ class FCTPEnv(gym.Env):
             num_cur_fail_2 += 1
 
             if self.instance.solution.totalCost < cur_sol or (
-                    num_cur_fail > 10 and self.instance.solution.totalCost < cur_sol * 1.05):
+                    num_cur_fail > 5 and self.instance.solution.totalCost < cur_sol * 1.05):
                 yield self.step(9, return_action=True)
                 cur_sol = self.instance.solution.totalCost
                 num_cur_fail = 0
@@ -512,25 +285,6 @@ class FCTPEnv(gym.Env):
         self.instance.IRNLS(2000)
         self.best_sol = self.instance.solution
         self.best_sol_val = self.instance.solution.totalCost
-
-    def get_solution_features(self, instance, old_features, upper_bound, lower_bound):
-        """
-        Updates solution features based on current state of instance, old features and lower and upper bounds.
-        :param instance: Java class RL_composite type with solution information etc.
-        :param old_features: Features from latest timestep
-        :param upper_bound: Upper bound on solution value for this instance
-        :param lower_bound: Lower bound on solution value for this instance
-        :return: Current performance, best performance, relative positive flow, success of latest action,
-        percentage of costs which are fixed costs and number of last 20 actions which were successes.
-        """
-        perf = get_relative_performance(instance.solution.totalCost, upper_bound, lower_bound)
-        best_perf = perf if perf > old_features[1] else old_features[1]
-        rel_pos_flow = instance.solution.get_rel_pos_flow()  # Call to java method
-        success_latest = perf > old_features[0]
-        self.success_last_20.append(success_latest)
-        fcost_perc = instance.get_fcost_percent()  # Call to java method
-
-        return perf, best_perf, rel_pos_flow, success_latest, fcost_perc, sum(self.success_last_20)
 
 
 def get_relative_performance(current_value, start_value, lower_bound):
