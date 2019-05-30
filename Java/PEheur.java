@@ -824,7 +824,7 @@ public class PEheur extends FCTPls {
                 if (iter % 6 == 1) {
                     modified_cost_local_search(4, 0);
                 } else if (iter % 6 == 3) {
-                    modified_cost_local_search(3, 0);
+                    modified_cost_local_search(5, 0);
                 } else if (iter % 6 == 5) {
                     Kicksolution_greedy(0, rc3);
                 }
@@ -891,7 +891,7 @@ public class PEheur extends FCTPls {
                 num_cur_fail = 0;
                 num_best_fail = 0;
             }
-            if (iter % 2 == 0) RNLS(50, 30);
+            if (iter % 2 == 0) RNLS(50, 20);
             else {
                 // Smaller pool of mutations, fixed order
                 if (iter % 6 == 1) {
@@ -930,7 +930,7 @@ public class PEheur extends FCTPls {
         for (int i = 0; i < population_sizes[0]; i++) {
 
             // Here you can adjust proportion of RandGreedy to LPheu
-            if (i > 2 * population_sizes[0] / 3) RandGreedy(0.5);
+            if (i > 2 * population_sizes[0] / 3) RandGreedy(0.4);
             else {
                 LPheu();
                 if (i > population_sizes[0] / 5) {
