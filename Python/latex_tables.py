@@ -69,9 +69,12 @@ def make_latex_table(headers, results, outfile, comparison=False, comma_separate
             f.write('   ' + line + '\n')
     f.close()
 
-import numpy as np
-# Eksempel på brug
+
+"""
+# Example usage:
+
 headers = ['klasse', 'højde', 'bredde']
 results = [['klasse1', 'klasse2', 'klasse3'], np.array([1000000,2,3]), [4,45000000,19]]
-outfile = '/home/tybirk/Desktop/hejmeddig.txt'
+outfile = '/home/tybirk/Desktop/test.txt'
 make_latex_table(headers, results, outfile)
+"""
