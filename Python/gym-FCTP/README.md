@@ -4,4 +4,4 @@ Run
 
 pip install -e .
 
-from this folder to install the environment. The environment itself is found in the /envs folder.
+from this folder to install the environment. The environment itself is found in the gym_FCTP/envs folder.
