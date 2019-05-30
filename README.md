@@ -46,7 +46,7 @@ You run the chosen algorithm on an instance from a file, e.g. Glover/N3004.FCTP 
 ```
 java FCTPmain Glover/N3004.FCTP
 ``` 
-In the file FCTPheur.java, you can inspect more closely which methods are then called for what hyperparameter setting. 
+In the file FCTPheur.java, you can inspect more closely which methods are then called for what hyperparameter setting. In the folder Java/doc, there are HTML files containing documentation for all the classes.
 
 #### Reinforcement learning part
 In the folder gym-FCTP/gym_FCTP/envs, the implementation of the FCTP environment can be found. The actions are implemented in Java and called in Python with the help of Pyjnius. 
