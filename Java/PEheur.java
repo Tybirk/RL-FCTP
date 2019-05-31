@@ -631,7 +631,7 @@ public class PEheur extends FCTPls {
                 Evaluation_based_IRNLS(rc_intensify, max_runs);
             }
             new_sols[i] = new FCTPsol(solution);
-            if (v2) Evaluation_based_IRNLS_v2(rc_diversify, max_runs / 4);
+            if (v2) Evaluation_based_IRNLS_v2(rc_diversify, max_runs / 2);
             else {
                 Evaluation_based_IRNLS(rc_diversify, max_runs);
             }
@@ -824,7 +824,7 @@ public class PEheur extends FCTPls {
                 if (iter % 6 == 1) {
                     modified_cost_local_search(4, 0);
                 } else if (iter % 6 == 3) {
-                    modified_cost_local_search(5, 0);
+                    modified_cost_local_search(3, 0);
                 } else if (iter % 6 == 5) {
                     Kicksolution_greedy(0, rc3);
                 }
