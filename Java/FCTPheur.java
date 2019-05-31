@@ -47,8 +47,6 @@ public class FCTPheur extends FCTPpop {
      * Method for constructing a first feasible solution.
      */
     public void initialSolution() throws Exception {
-        if (randgen.nextBoolean()) LPheu();
-        else RandGreedy(0.4);
         perfMeter.resetStats();
         if (FCTPparam.greedy_meas <= 0) {
             if (!LPheu()) throw new Exception("LP heuristic failed to give basic solution");

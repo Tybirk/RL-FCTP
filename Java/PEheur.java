@@ -335,6 +335,9 @@ public class PEheur extends FCTPls {
      */
     public void Kicksolution_greedy(int num_exchanges, RandomCollection<Integer> rc) {
         // If number of exchanges unspecified, then randomly decide on it
+        FCTPsol best_sol = new FCTPsol(solution);
+        boolean improve = false;
+
         if (num_exchanges == 0) {
             int num_basic = m + n - 1;
             num_exchanges = 3;
@@ -354,6 +357,15 @@ public class PEheur extends FCTPls {
             getCostSav(in_arc);
             RememberMove();
             DoMove();
+
+            if(solution.totalCost < best_sol.totalCost){ //If we by chance improve the solution, we keep track of it!
+                best_sol.Overwrite(solution);
+                improve = true;
+            }
+        }
+
+        if(improve){
+            solution.Overwrite(best_sol);
         }
 
     }
