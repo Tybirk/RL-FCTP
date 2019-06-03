@@ -41,7 +41,8 @@ The code underlying code for the environment can be found [here](https://github.
 ### Usages
 
 #### Java part
-You can run configure algorithm choice and some hyperparameters in the file FCTPheur.ini. 
+You can run configure algorithm choice and some hyperparameters in the file FCTPheur.ini. The current parameter settings were the ones used to provide new best solutions on 81 out of 120 instances from the folder Java/Glover. 
+
 You run the chosen algorithm on an instance from a file, e.g. Glover/N3004.FCTP by calling
 ```
 java FCTPmain Glover/N3004.FCTP

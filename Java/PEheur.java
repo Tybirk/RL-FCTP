@@ -448,7 +448,7 @@ public class PEheur extends FCTPls {
         System.arraycopy(fcost, 0, old_fc, 0, narcs);   //Store old fcosts
 
         for (int i = 0; i < n_kicked; i++) {
-            fcost[k_biggest[i]] = fcost[k_biggest[i]] * 100;
+            fcost[k_biggest[i]] = fcost[k_biggest[i]] * 5;
         }
 
         solution.ComputeCost(fcost, tcost);
@@ -808,7 +808,7 @@ public class PEheur extends FCTPls {
 
             if (FCTPparam.screen_on) System.out.format("%16.2f%10.2f%n", solution.totalCost, best_sol.totalCost);
 
-            boolean accept = (solution.totalCost < cur_sol.totalCost || (num_cur_fail > 5 && solution.totalCost < cur_sol.totalCost * 1.03));
+            boolean accept = (solution.totalCost < cur_sol.totalCost || (num_cur_fail > 7 && solution.totalCost < cur_sol.totalCost * 1.03));
 
             if (solution.totalCost < best_sol.totalCost) {
                 best_sol.Overwrite(solution);
@@ -825,7 +825,7 @@ public class PEheur extends FCTPls {
                 solution.Overwrite(cur_sol);
                 num_cur_fail++;
             }
-            if (num_best_fail >= 30) {
+            if (num_best_fail >= 80) {
                 solution.Overwrite(best_sol);
                 num_cur_fail = 0;
                 num_best_fail = 0;
@@ -881,7 +881,7 @@ public class PEheur extends FCTPls {
 
             if (FCTPparam.screen_on) System.out.format("%16.2f%10.2f%n", solution.totalCost, best_sol.totalCost);
 
-            boolean accept = (solution.totalCost < cur_sol.totalCost || (num_cur_fail > 5 && solution.totalCost < cur_sol.totalCost * 1.03));
+            boolean accept = (solution.totalCost < cur_sol.totalCost || (num_cur_fail > 7 && solution.totalCost < cur_sol.totalCost * 1.03));
 
             if (solution.totalCost < best_sol.totalCost) {
                 best_sol.Overwrite(solution);
@@ -898,7 +898,7 @@ public class PEheur extends FCTPls {
                 solution.Overwrite(cur_sol);
                 num_cur_fail++;
             }
-            if (num_best_fail >= 30) {
+            if (num_best_fail >= 80) {
                 solution.Overwrite(best_sol);
                 num_cur_fail = 0;
                 num_best_fail = 0;
@@ -940,7 +940,6 @@ public class PEheur extends FCTPls {
 
         // Create initial population of good solutions with IRNLS
         for (int i = 0; i < population_sizes[0]; i++) {
-
             // Here you can adjust proportion of RandGreedy to LPheu
             if (i > 2 * population_sizes[0] / 3) RandGreedy(0.4);
             else {
